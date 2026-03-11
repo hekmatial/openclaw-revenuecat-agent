@@ -13,7 +13,7 @@
 ## Topic Bank (rotate through these)
 
 ### SDK Tips
-- [ ] Setting up RevenueCat in 5 minutes (Swift)
+- [x] Setting up RevenueCat in 5 minutes (Swift)
 - [ ] Setting up RevenueCat in 5 minutes (Kotlin)
 - [ ] Setting up RevenueCat in 5 minutes (Flutter)
 - [ ] Setting up RevenueCat in 5 minutes (React Native)

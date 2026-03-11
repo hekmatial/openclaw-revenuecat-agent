@@ -49,7 +49,7 @@
 | 1 | 2 | 2026-03-08 | Influencer Candidates | day-02-influencer-candidates.md | success |
 | 1 | 3 | 2026-03-09 | Audience Analysis | day-03-audience-analysis.md | success |
 | 1 | 4 | 2026-03-10 | App Concept & RC Design | day-04-app-concept.md | success |
-| 1 | 5 | | | | pending |
+| 1 | 5 | 2026-03-11 | Tech Spec | day-05-tech-spec.md | success |
 | 1 | 6 | | | | pending |
 | 1 | 7 | | | | pending |
 | 1 | 8 | | | | pending |
