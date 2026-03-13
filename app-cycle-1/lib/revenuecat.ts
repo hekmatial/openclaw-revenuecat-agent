@@ -1,49 +1,34 @@
 /**
- * RevenueCat Web SDK Wrapper
- * Designed for Cycle 1: Japanese Fortune-Telling App POC
+ * RevenueCat Web SDK Integration (POC)
+ * In a real app, this would use the @revenuecat/purchases-js-sdk
  */
 
-import { Purchases } from '@revenuecat/purchases-js';
+export const REVENUECAT_APP_ID = 'fortune-flow-ai-web'; // Placeholder
+export const ENTITLEMENT_PRO = 'pro_access';
 
-const REVENUECAT_WEB_API_KEY = process.env.NEXT_PUBLIC_REVENUECAT_WEB_API_KEY || 'rc_web_placeholder';
+export interface CustomerInfo {
+  isActive: boolean;
+  entitlements: string[];
+}
 
-export const initRevenueCat = async (appUserId: string) => {
-  if (typeof window === 'undefined') return;
-  
-  try {
-    Purchases.configure(REVENUECAT_WEB_API_KEY, appUserId);
-    console.log('RevenueCat SDK configured for user:', appUserId);
-  } catch (error) {
-    console.error('RevenueCat configuration failed:', error);
-  }
-};
+/**
+ * Mock implementation of checking subscription status.
+ * In production: await Purchases.getCustomerInfo()
+ */
+export async function getCustomerStatus(): Promise<CustomerInfo> {
+  // In a real POC with an actual API key, we would initialize RC here.
+  // For now, we simulate the logic for checking entitlements.
+  return {
+    isActive: false, // Default to inactive for paywall demonstration
+    entitlements: []
+  };
+}
 
-export const getOfferings = async () => {
-  try {
-    const offerings = await Purchases.getOfferings();
-    return offerings;
-  } catch (error) {
-    console.error('Failed to fetch offerings:', error);
-    return null;
-  }
-};
-
-export const purchasePackage = async (pkg: any) => {
-  try {
-    const { customerInfo } = await Purchases.purchasePackage(pkg);
-    return customerInfo;
-  } catch (error) {
-    console.error('Purchase failed:', error);
-    throw error;
-  }
-};
-
-export const getCustomerInfo = async () => {
-  try {
-    const customerInfo = await Purchases.getCustomerInfo();
-    return customerInfo;
-  } catch (error) {
-    console.error('Failed to get customer info:', error);
-    return null;
-  }
-};
+/**
+ * Mock implementation of the purchase flow.
+ * In production: await Purchases.purchasePackage(package)
+ */
+export async function purchasePro(packageType: 'monthly' | 'annual'): Promise<boolean> {
+  console.log(`Initializing purchase flow for ${packageType} plan via RevenueCat...`);
+  return true;
+}
