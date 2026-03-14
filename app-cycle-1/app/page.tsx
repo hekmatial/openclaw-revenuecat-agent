@@ -76,32 +76,9 @@ export default function Home() {
               Join FortuneFlow Pro to access unlimited tarot sessions and advanced transit tracking.
             </p>
             
-            {/* Simple Paywall Pricing UI */}
-            <div className="space-y-4 mb-10">
-              <div className="flex items-center justify-between p-4 rounded-2xl border-2 border-indigo-500 bg-indigo-500/10">
-                <div className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full border-2 border-indigo-500 bg-indigo-500 flex items-center justify-center">
-                    <div className="w-2 h-2 rounded-full bg-white" />
-                  </div>
-                  <span className="font-bold">Annual Pro</span>
-                </div>
-                <div className="text-right">
-                  <div className="font-bold">¥7,800 / year</div>
-                  <div className="text-xs text-indigo-300">Save 33%</div>
-                </div>
-              </div>
-              <div className="flex items-center justify-between p-4 rounded-2xl border-2 border-white/10 hover:border-white/20 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full border-2 border-white/30" />
-                  <span className="font-bold">Monthly Pro</span>
-                </div>
-                <div className="font-bold">¥980 / month</div>
-              </div>
-            </div>
-
-            <button className="w-full py-5 bg-white text-slate-900 font-black rounded-2xl shadow-xl hover:bg-indigo-50 transition-colors active:scale-95 mb-4">
-              START 7-DAY FREE TRIAL
-            </button>
+            <a href="/paywall" className="block w-full py-5 bg-white text-slate-900 text-center font-black rounded-2xl shadow-xl hover:bg-indigo-50 transition-colors active:scale-95 mb-4">
+              VIEW SUBSCRIPTION PLANS
+            </a>
             <p className="text-xs text-slate-500">
               Securely powered by RevenueCat. Cancel anytime.
             </p>
