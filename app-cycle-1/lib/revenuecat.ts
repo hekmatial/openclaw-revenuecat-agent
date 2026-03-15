@@ -1,34 +1,30 @@
-/**
- * RevenueCat Web SDK Integration (POC)
- * In a real app, this would use the @revenuecat/purchases-js-sdk
- */
+import { RevenueCatWeb } from "@revenuecat/purchases-js";
 
-export const REVENUECAT_APP_ID = 'fortune-flow-ai-web'; // Placeholder
-export const ENTITLEMENT_PRO = 'pro_access';
+const REVENUECAT_API_KEY = process.env.NEXT_PUBLIC_REVENUECAT_WEB_API_KEY || "rc_placeholder_key";
 
-export interface CustomerInfo {
-  isActive: boolean;
-  entitlements: string[];
+export const rc = RevenueCatWeb.setup({
+  apiKey: REVENUECAT_API_KEY,
+});
+
+export async function getCustomerInfo(appUserId: string) {
+  try {
+    const customerInfo = await rc.getCustomerInfo(appUserId);
+    return customerInfo;
+  } catch (e) {
+    console.error("Error fetching CustomerInfo from RevenueCat:", e);
+    return null;
+  }
 }
 
-/**
- * Mock implementation of checking subscription status.
- * In production: await Purchases.getCustomerInfo()
- */
-export async function getCustomerStatus(): Promise<CustomerInfo> {
-  // In a real POC with an actual API key, we would initialize RC here.
-  // For now, we simulate the logic for checking entitlements.
-  return {
-    isActive: false, // Default to inactive for paywall demonstration
-    entitlements: []
-  };
-}
-
-/**
- * Mock implementation of the purchase flow.
- * In production: await Purchases.purchasePackage(package)
- */
-export async function purchasePro(packageType: 'monthly' | 'annual'): Promise<boolean> {
-  console.log(`Initializing purchase flow for ${packageType} plan via RevenueCat...`);
-  return true;
+export async function purchasePackage(appUserId: string, packageToBuy: any) {
+  try {
+    const { customerInfo } = await rc.purchase({
+      appUserId,
+      newPackage: packageToBuy,
+    });
+    return customerInfo;
+  } catch (e) {
+    console.error("Error performing purchase with RevenueCat:", e);
+    throw e;
+  }
 }

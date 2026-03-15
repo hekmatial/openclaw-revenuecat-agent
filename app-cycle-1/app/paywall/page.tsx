@@ -1,95 +1,71 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+// In a real app, we'd import the rc instance
+// import { rc } from "@/lib/revenuecat";
 
-// Note: In a real app, this would be an environment variable.
-// For the POC, we describe the integration pattern.
-const REVENUECAT_WEB_SDK_URL = "https://cdn.revenuecat.com/web-sdk/v1/revenuecat.js";
+export default function Paywall() {
+  const [offerings, setOfferings] = useState<any[]>([]);
 
-export default function PaywallPage() {
-  const [loading, setLoading] = useState(true);
-  const [offerings, setOfferings] = useState<any>(null);
-
-  useEffect(() => {
-    // 1. Initialize RevenueCat Web SDK logic
-    console.log("RevenueCat SDK would be initialized here with App ID.");
-    
-    // Simulate fetching offerings from RevenueCat
-    const timer = setTimeout(() => {
-      setOfferings({
-        current: {
-          packages: [
-            { identifier: 'monthly', product: { title: 'Monthly Pro', priceString: '¥980' } },
-            { identifier: 'annual', product: { title: 'Annual Pro', priceString: '¥7,800' } }
-          ]
-        }
-      });
-      setLoading(false);
-    }, 800);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handlePurchase = (packageId: string) => {
-    alert(`RevenueCat purchase flow initiated for: ${packageId}\n\nThis would call RC.purchase(package) behind the scenes.`);
-  };
+  // Placeholder offerings for POC visualization
+  const mockOfferings = [
+    {
+      id: "rc_monthly",
+      title: "Monthly Seeker",
+      price: "¥980",
+      description: "Unlimited AI readings for one month.",
+      features: ["Unlimited Tarot pulls", "Deep Star analysis", "Save your history"]
+    },
+    {
+      id: "rc_annual",
+      title: "Yearly Visionary",
+      price: "¥8,800",
+      description: "A full year of spiritual guidance. Best value!",
+      features: ["All Monthly features", "Exclusive monthly forecast", "Priority AI response"]
+    }
+  ];
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center p-6">
-      <div className="max-w-md w-full text-center">
-        <div className="mb-8">
-          <div className="w-20 h-20 bg-indigo-600 rounded-3xl mx-auto flex items-center justify-center text-4xl mb-6 shadow-2xl shadow-indigo-500/20">
-            🔮
-          </div>
-          <h1 className="text-3xl font-black mb-2 tracking-tight">FortuneFlow Pro</h1>
-          <p className="text-slate-400">Unlock your spiritual potential with unlimited AI tarot and advanced transit charts.</p>
-        </div>
+    <div className="min-h-screen bg-slate-50 flex flex-col items-center py-12 px-4">
+      <div className="max-w-md w-full text-center mb-10">
+        <h1 className="text-3xl font-extrabold text-slate-900 mb-2">Unlock Your Full Potential 💎</h1>
+        <p className="text-slate-600">Choose a plan to get unlimited access to the AI Oracle.</p>
+      </div>
 
-        {loading ? (
-          <div className="animate-pulse space-y-4">
-            <div className="h-20 bg-white/5 rounded-2xl" />
-            <div className="h-20 bg-white/5 rounded-2xl" />
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {offerings?.current.packages.map((pkg: any) => (
-              <button
-                key={pkg.identifier}
-                onClick={() => handlePurchase(pkg.identifier)}
-                className={`w-full p-5 rounded-2xl border-2 transition-all flex items-center justify-between group ${
-                  pkg.identifier === 'annual' 
-                  ? 'border-indigo-500 bg-indigo-500/10 hover:bg-indigo-500/20' 
-                  : 'border-white/10 bg-white/5 hover:border-white/20'
-                }`}
-              >
-                <div className="text-left">
-                  <div className="font-bold text-lg">{pkg.product.title}</div>
-                  {pkg.identifier === 'annual' && <div className="text-xs text-indigo-400 font-medium">Best Value — ¥650/mo equivalent</div>}
-                </div>
-                <div className="text-right">
-                  <div className="font-black text-xl">{pkg.product.priceString}</div>
-                  <div className="text-xs text-slate-500">7-day free trial</div>
-                </div>
-              </button>
-            ))}
-
-            <button 
-              className="w-full mt-6 py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-2xl transition-all shadow-xl shadow-indigo-500/20 active:scale-[0.98]"
-            >
-              CONTINUE TO TRIAL
-            </button>
+      <div className="grid grid-cols-1 gap-6 max-w-4xl w-full sm:grid-cols-2">
+        {mockOfferings.map((pkg) => (
+          <div key={pkg.id} className="bg-white rounded-2xl p-8 shadow-xl border-2 border-transparent hover:border-purple-500 transition-all flex flex-col">
+            <h3 className="text-xl font-bold text-slate-800 mb-1">{pkg.title}</h3>
+            <div className="flex items-baseline gap-1 mb-4">
+              <span className="text-3xl font-bold">{pkg.price}</span>
+              <span className="text-slate-500 text-sm">/ {pkg.id.includes("monthly") ? "month" : "year"}</span>
+            </div>
+            <p className="text-slate-600 text-sm mb-6">{pkg.description}</p>
             
-            <p className="mt-6 text-[10px] text-slate-500 uppercase tracking-widest font-bold">
-              Powered by RevenueCat Web SDK
-            </p>
-          </div>
-        )}
+            <ul className="space-y-3 mb-8 flex-grow">
+              {pkg.features.map((f, i) => (
+                <li key={i} className="flex items-center gap-3 text-sm text-slate-700">
+                  <svg className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  {f}
+                </li>
+              ))}
+            </ul>
 
-        <div className="mt-12 flex gap-6 justify-center text-[10px] text-slate-600 font-bold uppercase tracking-widest">
-          <button className="hover:text-slate-400 transition-colors">Restore</button>
-          <button className="hover:text-slate-400 transition-colors">Terms</button>
-          <button className="hover:text-slate-400 transition-colors">Privacy</button>
-        </div>
+            <button className="w-full py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition-colors shadow-lg">
+              Start Your Journey
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <button className="mt-8 text-slate-400 text-sm hover:underline">
+        Restore Purchases
+      </button>
+
+      <div className="mt-12 text-xs text-slate-400 text-center max-w-xs">
+        By subscribing, you agree to our Terms of Service and Privacy Policy. Subscriptions renew automatically unless cancelled.
       </div>
     </div>
   );
