@@ -1,36 +1,36 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+'use client';
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "AI Fortune Teller POC",
-  description: "RevenueCat powered fortune telling app for X influencers",
-};
+import { useEffect } from 'react';
+import { initRevenueCat } from '@/lib/revenuecat';
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  useEffect(() => {
+    initRevenueCat();
+  }, []);
+
   return (
     <html lang="ja">
-      <body className={inter.className}>
-        <div className="min-h-screen bg-slate-950 text-slate-50 flex flex-col">
-          <header className="p-6 border-b border-slate-800 flex justify-between items-center">
-            <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-              AI Fortune Teller POC 🔮
-            </h1>
-            <div className="text-xs text-slate-500">Cycle 1 / Day 6</div>
-          </header>
-          <main className="flex-grow container mx-auto px-4 py-8">
-            {children}
-          </main>
-          <footer className="p-6 border-t border-slate-800 text-center text-sm text-slate-500">
-            Powered by <span className="font-semibold text-orange-400">RevenueCat</span>
-          </footer>
-        </div>
+      <body className="bg-slate-50 text-slate-900">
+        <header className="p-4 border-b bg-white">
+          <div className="max-w-4xl mx-auto flex justify-between items-center">
+            <h1 className="text-xl font-bold font-serif">FortuneFlow AI 🔮</h1>
+            <nav className="space-x-4 text-sm">
+              <a href="#" className="hover:text-indigo-600">Home</a>
+              <a href="#features" className="hover:text-indigo-600">Features</a>
+              <a href="/paywall" className="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition">Get Pro</a>
+            </nav>
+          </div>
+        </header>
+        <main className="max-w-4xl mx-auto py-8 px-4">
+          {children}
+        </main>
+        <footer className="p-8 border-t text-center text-slate-400 text-xs">
+          © 2026 FortuneFlow AI. Powered by RevenueCat & Agentic AI.
+        </footer>
       </body>
     </html>
   );

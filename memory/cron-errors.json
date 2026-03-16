@@ -3,6 +3,6 @@
     "job": "x-morning-tip",
     "error": "【人の作業が必要】Vercelログインが必要です。Macで npx vercel login を実行してブラウザでログインしてください。完了後、次の朝に自動で再試行します。",
     "ts": "2026-03-15T00:00:00Z",
-    "acked": false
+    "acked": true
   }
 ]

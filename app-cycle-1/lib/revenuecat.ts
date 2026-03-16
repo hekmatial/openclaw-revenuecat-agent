@@ -1,30 +1,34 @@
-import { RevenueCatWeb } from "@revenuecat/purchases-js";
+import Purchases from '@revenuecat/purchases-js';
 
-const REVENUECAT_API_KEY = process.env.NEXT_PUBLIC_REVENUECAT_WEB_API_KEY || "rc_placeholder_key";
+// Note: In a real app, these would be in environment variables
+const PUBLIC_API_KEY = process.env.NEXT_PUBLIC_REVENUECAT_PUBLIC_KEY || 'goog_placeholder_key';
+const APP_USER_ID = 'user_id_placeholder'; // Replace with actual user ID logic
 
-export const rc = RevenueCatWeb.setup({
-  apiKey: REVENUECAT_API_KEY,
-});
+export const initRevenueCat = async () => {
+  if (typeof window !== 'undefined') {
+    try {
+      Purchases.configure(PUBLIC_API_KEY, APP_USER_ID);
+      console.log('RevenueCat SDK configured successfully');
+    } catch (e) {
+      console.error('RevenueCat configuration failed', e);
+    }
+  }
+};
 
-export async function getCustomerInfo(appUserId: string) {
+export const getCustomerInfo = async () => {
   try {
-    const customerInfo = await rc.getCustomerInfo(appUserId);
-    return customerInfo;
+    return await Purchases.getSharedInstance().getCustomerInfo();
   } catch (e) {
-    console.error("Error fetching CustomerInfo from RevenueCat:", e);
+    console.error('Error fetching customer info', e);
     return null;
   }
-}
+};
 
-export async function purchasePackage(appUserId: string, packageToBuy: any) {
+export const getOfferings = async () => {
   try {
-    const { customerInfo } = await rc.purchase({
-      appUserId,
-      newPackage: packageToBuy,
-    });
-    return customerInfo;
+    return await Purchases.getSharedInstance().getOfferings();
   } catch (e) {
-    console.error("Error performing purchase with RevenueCat:", e);
-    throw e;
+    console.error('Error fetching offerings', e);
+    return null;
   }
-}
+};
