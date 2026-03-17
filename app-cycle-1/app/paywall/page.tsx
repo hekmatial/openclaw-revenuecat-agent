@@ -35,7 +35,12 @@ export default function Paywall() {
       <div className="grid grid-cols-1 gap-6 max-w-4xl w-full sm:grid-cols-2">
         {mockOfferings.map((pkg) => (
           <div key={pkg.id} className="bg-white rounded-2xl p-8 shadow-xl border-2 border-transparent hover:border-purple-500 transition-all flex flex-col">
-            <h3 className="text-xl font-bold text-slate-800 mb-1">{pkg.title}</h3>
+            <h3 className="text-xl font-bold text-slate-800 mb-1 flex items-center justify-between">
+              {pkg.title}
+              {pkg.id === "rc_annual" && (
+                <span className="text-[10px] font-bold text-white bg-purple-600 px-2 py-0.5 rounded-full">POPULAR</span>
+              )}
+            </h3>
             <div className="flex items-baseline gap-1 mb-4">
               <span className="text-3xl font-bold">{pkg.price}</span>
               <span className="text-slate-500 text-sm">/ {pkg.id.includes("monthly") ? "month" : "year"}</span>
